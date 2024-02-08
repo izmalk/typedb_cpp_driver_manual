@@ -9,10 +9,9 @@ int main() {
     TypeDB::Driver driver = TypeDB::Driver::coreDriver("127.0.0.1:1729");
 
     try {
-        auto dbs = driver.databases.all();
-        for (TypeDB::Database& db : dbs) {
+        for (auto& db: driver.databases.all()) {
             std::cout << db.name() << std::endl;
-        };
+        }
         if (driver.databases.contains(dbName)) {
             driver.databases.get(dbName).deleteDatabase();
         }
