@@ -1,0 +1,3 @@
+/Users/vladimir/Documents/GitHub/typedb_cpp_driver_manual/build/CMakeFiles/main.dir
+/Users/vladimir/Documents/GitHub/typedb_cpp_driver_manual/build/CMakeFiles/edit_cache.dir
+/Users/vladimir/Documents/GitHub/typedb_cpp_driver_manual/build/CMakeFiles/rebuild_cache.dir
