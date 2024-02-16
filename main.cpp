@@ -202,10 +202,10 @@ int main() {
         }
         // end::infer-rule[]
         // tag::infer-fetch[]
+        TypeDB::Options inferOptions;
+        inferOptions.infer(true);
+        auto session2 = driver.session(dbName, TypeDB::SessionType::DATA, inferOptions);
         {
-            TypeDB::Options inferOptions;
-            inferOptions.infer(true);
-            auto session2 = driver.session(dbName, TypeDB::SessionType::DATA, inferOptions);
             auto transaction2 = session.transaction(TypeDB::TransactionType::READ, inferOptions);
             std::string fetchQuery = R"(
                                         match
@@ -297,12 +297,12 @@ int main() {
     }
 
     {
-        // tag::infer-fetch[]
+        // tag::explain-get[]
+        TypeDB::Options inferOptions;
+        inferOptions.infer(true);
+        inferOptions.explain(true);
+        auto session = driver.session(dbName, TypeDB::SessionType::DATA, inferOptions);
         {
-            TypeDB::Options inferOptions;
-            inferOptions.infer(true);
-            inferOptions.explain(true);
-            auto session = driver.session(dbName, TypeDB::SessionType::DATA, inferOptions);
             auto transaction = session.transaction(TypeDB::TransactionType::READ, inferOptions);
             std::string getQuery = R"(
                                     match
@@ -333,9 +333,7 @@ int main() {
                 }
             }
         }
-        // end::infer-fetch[]
-
-
+        // end::explain-get[]
     }
     return 0;
 }
