@@ -3,7 +3,7 @@
 #include <typedb_driver.hpp>
 // end::import[]
 int main() {
-    std::string dbName = "test_cpp";
+    std::string dbName = "manual";
     // tag::options[]
     TypeDB::Options options;
     // end::options[]
@@ -268,9 +268,9 @@ int main() {
                 std::cout << rule.when() << std::endl;
                 std::cout << rule.then() << std::endl;
             }
-            TypeDB::Rule new_rule = txn.logic.putRule("Employee", "{$u isa user, has email $e; $e contains '@vaticle.com';}","$u has name 'Employee'").get();
+            TypeDB::Rule newRule = txn.logic.putRule("Employee", "{$u isa user, has email $e; $e contains '@vaticle.com';}","$u has name 'Employee'").get();
             std::cout << txn.logic.getRule("Employee").get().value().label() << std::endl;
-            new_rule.deleteRule(txn).get();
+            newRule.deleteRule(txn).get();
             txn.commit();
         }
         // end::rules-api[]
@@ -281,7 +281,8 @@ int main() {
         TypeDB::Session session = driver.session(dbName, TypeDB::SessionType::DATA, options);
         {
             TypeDB::Transaction txn = session.transaction(TypeDB::TransactionType::WRITE, options);
-            TypeDB::ConceptIterable<TypeDB::Entity> users = txn.concepts.getEntityType("user").get().get()->getInstances(txn);
+            std::unique_ptr<TypeDB::EntityType> userType = txn.concepts.getEntityType("user").get();
+            TypeDB::ConceptIterable<TypeDB::Entity> users = userType -> getInstances(txn);
             for (std::unique_ptr<TypeDB::Entity>& user : users) {
                 TypeDB::ConceptIterable<TypeDB::Attribute> attributes = user.get()->getHas(txn);
                 std::cout << "User: " << std::endl;
@@ -316,8 +317,8 @@ int main() {
             for (TypeDB::ConceptMap& cm : results) {
                 i += 1;
                 std::cout << "Name #" << std::to_string(i) << ": " << cm.get("n")->asAttribute()->getValue()->asString() << std::endl;
-                TypeDB::StringIterable explainable_relations = cm.explainables().relations();
-                for (std::string& explainable : explainable_relations) {
+                TypeDB::StringIterable explainableRelations = cm.explainables().relations();
+                for (std::string& explainable : explainableRelations) {
                     std::cout << "Explained variable " << explainable << std::endl;
                     std::cout << "Explainable part of the query " << cm.explainables().relation(explainable).conjunction() << std::endl;
                     TypeDB::ExplanationIterable explainIterator = txn.query.explain(cm.explainables().relation(explainable));
