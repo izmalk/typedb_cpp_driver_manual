@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/Users/vladimir/Documents/GitHub/typedb_cpp_driver_manual/build",
-  "command": "/usr/bin/clang++  -I/Users/vladimir/Documents/GitHub/typedb_cpp_driver_manual/include -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk -o CMakeFiles/main.dir/main.cpp.o -c /Users/vladimir/Documents/GitHub/typedb_cpp_driver_manual/main.cpp",
-  "file": "/Users/vladimir/Documents/GitHub/typedb_cpp_driver_manual/main.cpp",
-  "output": "CMakeFiles/main.dir/main.cpp.o"
-}
-]
